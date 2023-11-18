@@ -1,11 +1,11 @@
 import requests
-from requests import Response
-from requests.structures import CaseInsensitiveDict
+from Dto.VacancyDTO import VacancyDTO
 
 
 class HeadHunterParser:
     url = 'https://api.hh.ru/vacancies'
 
+    @staticmethod
     def get_vacancies(search_query: str, search_area: int) -> list[dict]:
         params = {
             "text": search_query,
@@ -21,7 +21,7 @@ class HeadHunterParser:
         # Проверьте, является ли код состояния ответа 200 (OK), прежде чем пытаться разобрать JSON.
         if response.status_code == 200:
             data_vacancy = response.json().get('items', [])
-            return HeadHunterParser.data_organize(data_vacancy)
+            return VacancyDTO.parse_vacancy_data(data_vacancy)  # Добавлен возврат результата
         else:
             # Обработайте ошибку или вызовите исключение при необходимости.
             response.raise_for_status()
