@@ -5,7 +5,6 @@ from Dto.VacancyDTO import VacancyDTO
 class HeadHunterParser:
     url = 'https://api.hh.ru/vacancies'
 
-    @staticmethod
     def get_vacancies(search_query: str, search_area: int) -> list[dict]:
         params = {
             "text": search_query,
@@ -21,7 +20,7 @@ class HeadHunterParser:
         # Успешный сценарий
         if response.status_code == 200:
             data_vacancy = response.json().get('items', [])
-            return VacancyDTO.parse_vacancy_data(data_vacancy)  # Добавлен возврат результата
+            return VacancyDTO.parse_vacancy_data_hh(data_vacancy)  # Добавлен возврат результата
         else:
             # Обработка ошибок
             response.raise_for_status()
