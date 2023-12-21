@@ -9,7 +9,7 @@ conn = psycopg2.connect(
 )
 
 def register_user(username, password):
-    hashed_password = generate_password_hash(password, method='sha256')
+    hashed_password = generate_password_hash(password, method='pbkdf2')
     with conn.cursor() as cursor:
         cursor.execute("INSERT INTO user_auth (username, password) VALUES (%s, %s);", (username, hashed_password))
     conn.commit()

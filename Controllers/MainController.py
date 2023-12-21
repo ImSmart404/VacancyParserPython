@@ -27,7 +27,7 @@ def login():
 
 
 @main_controller_app.route('/service', methods=['POST'])
-def hh():
+def service():
     data_from_service = None
     vacancy_title = request.form.get('vacancy_title')
     service_name = request.form.get('service_name')
@@ -44,4 +44,5 @@ def hh():
 
 @main_controller_app.route('/favourites', methods=['POST'])
 def favourites():
-    vacancy_id = request.form.get('id')
+    vacancy_id = request.form.get('vacancy_id')
+    user_id = request.form.get('user_id')
