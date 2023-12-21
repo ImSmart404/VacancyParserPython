@@ -12,13 +12,14 @@ class VacancyDTO:
     def parse_vacancy_data_hh(data):
         vacancies = []
         for vacancy_info in data:
-            title = vacancy_info['name']
-            link = vacancy_info['url']
+            title = vacancy_info.get('name', 'No Title')
+            link = vacancy_info.get('url', '')
 
             salary_info = vacancy_info.get('salary', {})
             salary = salary_info.get('from', 0)
 
-            requirement = vacancy_info.get('snippet', {}).get('requirement', '')
+            snippet = vacancy_info.get('snippet', {})
+            requirement = snippet.get('requirement', '')
 
             vacancy = VacancyDTO(title, link, salary, requirement)
             vacancies.append(vacancy)
@@ -33,8 +34,8 @@ class VacancyDTO:
         """
         vacancies = []
         for vacancy in data_vacancy:
-            title = vacancy['profession']
-            link = vacancy['link']
+            title = vacancy.get('profession', 'No Title')
+            link = vacancy.get('link', '')
             salary_from = vacancy.get('payment_from', None)
             salary_to = vacancy.get('payment_to', None)
             requirement = vacancy.get('candidat', None)
@@ -67,3 +68,8 @@ class VacancyDTO:
                 })
 
         return vacancies
+
+    def vacancy_dict_to_object(d):
+        if 'title' in d and 'link' in d and 'salary' in d and 'requirement' in d:
+            return VacancyDTO(d['title'], d['link'], d['salary'], d['requirement'])
+        return d
