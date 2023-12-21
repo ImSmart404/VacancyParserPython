@@ -1,4 +1,6 @@
-import json
+from typing import List
+
+
 class VacancyDTO:
     def __init__(self, title, link, salary, requirement):
         self.title = title
@@ -12,7 +14,10 @@ class VacancyDTO:
         for vacancy_info in data:
             title = vacancy_info['name']
             link = vacancy_info['url']
-            salary = vacancy_info.get('salary', {}).get('amount', 0)
+
+            salary_info = vacancy_info.get('salary', {})
+            salary = salary_info.get('from', 0)
+
             requirement = vacancy_info.get('snippet', {}).get('requirement', '')
 
             vacancy = VacancyDTO(title, link, salary, requirement)
@@ -21,7 +26,7 @@ class VacancyDTO:
         return vacancies
 
     @staticmethod
-    def parse_vacancy_data_sj(data_vacancy) -> list[dict]:
+    def parse_vacancy_data_sj(data_vacancy) -> List[dict]:
         """
         Организация данных по вакансиям.
         Возвращает сформированный список словарей.

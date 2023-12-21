@@ -7,3 +7,14 @@ services:
     ports:
       - "8500:8500"
       - "8600:8600/udp"
+  postgres:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./resources:/docker-entrypoint-initdb.d

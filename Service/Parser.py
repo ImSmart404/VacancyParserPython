@@ -1,4 +1,6 @@
 import requests
+from typing import List
+
 from Dto.VacancyDTO import VacancyDTO
 
 
@@ -6,7 +8,7 @@ class Parser:
     url_hh = 'https://api.hh.ru/vacancies'
     url_sj = 'https://api.superjob.ru/2.0/vacancies/'
 
-    def get_vacancies_from_hh(search_query: str, search_area: int) -> list[dict]:
+    def get_vacancies_from_hh(search_query: str, search_area: int) -> List[dict]:
         params = {
             "text": search_query,
             "area": search_area,
@@ -26,7 +28,7 @@ class Parser:
             # Обработка ошибок
             response.raise_for_status()
 
-    def get_vacancies_from_sj(search_query: str, search_area: int) -> list[dict]:
+    def get_vacancies_from_sj(search_query: str, search_area: int) -> List[dict]:
 
         params = {
             "keyword": search_query,
